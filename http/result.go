@@ -6,6 +6,12 @@ import (
 	"net/http"
 )
 
+/**
+ * @Author: nick
+ * @Date: 2022/01/16 4:45 PM
+ * @Version: 1.0.0
+ */
+
 func OK(ctx *gin.Context, data interface{}) {
 	ctx.AbortWithStatusJSON(http.StatusOK, data)
 }

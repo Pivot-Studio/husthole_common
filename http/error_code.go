@@ -2,6 +2,12 @@ package http
 
 import "fmt"
 
+/**
+ * @Author: nick
+ * @Date: 2022/01/16 4:45 PM
+ * @Version: 1.0.0
+ */
+
 type ErrorCode struct {
 	CodeInner int
 	Msg       string
