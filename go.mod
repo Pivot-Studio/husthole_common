@@ -1,4 +1,4 @@
-module husthole_common
+module github.com/Pivot-Studio/husthole_common
 
 go 1.17
 
