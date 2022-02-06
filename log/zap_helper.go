@@ -14,7 +14,6 @@ type CtxProvider interface {
 	context.Context
 	Set(key string, value interface{})
 	Get(key string) (value interface{}, exists bool)
-	Iterate(func(key string, value interface{}))
 }
 
 type ChainLogger struct {
@@ -64,46 +63,45 @@ func Sync() {
 	defaultLogger.Sync()
 }
 
-func CtxDebug(ctx CtxProvider, msg string) *ChainLogger {
+func CtxDebug(ctx CtxProvider, msg string) {
 	c := &ChainLogger{
 		logFunc: defaultLogger.Debug,
 		msg:     msg,
 	}
-	ctx.Iterate(func(key string, value interface{}) {
-		c.fields = append(c.fields, zap.Any(key, value))
-	})
-	return c
+	c.fields = append(c.fields, zap.Any("logid", ctx.Value("x-logid")))
+	c.fields = append(c.fields, zap.Any("appid", ctx.Value("x-appid")))
+	c.Log()
 }
 
-func CtxInfo(ctx CtxProvider, msg string) *ChainLogger {
+func CtxInfo(ctx CtxProvider, msg string) {
 	c := &ChainLogger{
 		logFunc: defaultLogger.Info,
 		msg:     msg,
 	}
-	ctx.Iterate(func(key string, value interface{}) {
-		c.fields = append(c.fields, zap.Any(key, value))
-	})
-	return c
+	c.fields = append(c.fields, zap.Any("logid", ctx.Value("x-logid")))
+	c.fields = append(c.fields, zap.Any("appid", ctx.Value("x-appid")))
+	c.fields = append(c.fields, zap.Any("UserAgent", ctx.Value("User-Agent")))
+	c.Log()
 }
 
-func CtxWarn(ctx CtxProvider, msg string) *ChainLogger {
+func CtxWarn(ctx CtxProvider, msg string) {
 	c := &ChainLogger{
 		logFunc: defaultLogger.Warn,
 		msg:     msg,
 	}
-	ctx.Iterate(func(key string, value interface{}) {
-		c.fields = append(c.fields, zap.Any(key, value))
-	})
-	return c
+	c.fields = append(c.fields, zap.Any("logid", ctx.Value("x-logid")))
+	c.fields = append(c.fields, zap.Any("appid", ctx.Value("x-appid")))
+	c.fields = append(c.fields, zap.Any("UserAgent", ctx.Value("User-Agent")))
+	c.Log()
 }
 
-func CtxError(ctx CtxProvider, msg string) *ChainLogger {
+func CtxError(ctx CtxProvider, msg string) {
 	c := &ChainLogger{
 		logFunc: defaultLogger.Error,
 		msg:     msg,
 	}
-	ctx.Iterate(func(key string, value interface{}) {
-		c.fields = append(c.fields, zap.Any(key, value))
-	})
-	return c
+	c.fields = append(c.fields, zap.Any("logid", ctx.Value("x-logid")))
+	c.fields = append(c.fields, zap.Any("appid", ctx.Value("x-appid")))
+	c.fields = append(c.fields, zap.Any("UserAgent", ctx.Value("User-Agent")))
+	c.Log()
 }
